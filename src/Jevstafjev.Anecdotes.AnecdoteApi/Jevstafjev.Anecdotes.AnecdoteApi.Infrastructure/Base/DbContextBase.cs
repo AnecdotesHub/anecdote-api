@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Jevstafjev.Anecdotes.AnecdoteApi.Domain.Base;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jevstafjev.Anecdotes.AnecdoteApi.Infrastructure.Base;
 
