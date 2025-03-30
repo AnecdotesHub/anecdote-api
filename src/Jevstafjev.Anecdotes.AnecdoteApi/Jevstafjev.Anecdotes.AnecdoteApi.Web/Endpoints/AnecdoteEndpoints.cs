@@ -21,6 +21,11 @@ namespace Jevstafjev.Anecdotes.AnecdoteApi.Web.Endpoints
         {
             var group = routes.MapGroup("/api/anecdotes/").WithTags(nameof(Anecdote));
 
+            group.MapGet("{id:guid}", async ([FromServices] IMediator mediator, Guid id, HttpContext context) =>
+                await mediator.Send(new AnecdoteGetByIdRequest(id, context.User), context.RequestAborted))
+                .Produces(200)
+                .WithOpenApi();
+
             group.MapGet("paged/{pageIndex:int}", async ([FromServices] IMediator mediator,
                 HttpContext context,
                 int pageIndex,
