@@ -33,7 +33,14 @@ namespace Jevstafjev.Anecdotes.AnecdoteApi.Web.Endpoints
                 await mediator.Send(new AnecdoteGetPagedRequest(pageIndex, pageSize, context.User), context.RequestAborted))
                 .Produces(200)
                 .WithOpenApi();
-
+            
+            group.MapGet("find-by-tag/{tag}", async ([FromServices] IMediator mediator,
+                HttpContext context,
+                string tag,
+                int pageIndex = 0,
+                int pageSize = 10) =>
+                await mediator.Send(new AnecdoteFindByTagRequest(tag, pageIndex, pageSize, context.User), context.RequestAborted));
+            
             group.MapPost("create", async ([FromServices] IMediator mediator, [FromBody] AnecdoteCreateViewModel model, HttpContext context) =>
                 await mediator.Send(new AnecdoteCreateRequest(model, context.User), context.RequestAborted))
                 .Produces(200)
