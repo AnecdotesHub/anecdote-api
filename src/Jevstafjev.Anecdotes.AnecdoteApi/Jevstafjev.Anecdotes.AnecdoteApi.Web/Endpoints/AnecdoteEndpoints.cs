@@ -51,6 +51,11 @@ namespace Jevstafjev.Anecdotes.AnecdoteApi.Web.Endpoints
                 .Produces(200)
                 .WithOpenApi();
 
+            group.MapGet("random-list", async ([FromServices] IMediator mediator, HttpContext context, int total = 10) =>
+                await mediator.Send(new AnecdoteGetRandomListRequest(total), context.RequestAborted))
+                .Produces(200)
+                .WithOpenApi();
+
             group.MapPost("create", async ([FromServices] IMediator mediator, [FromBody] AnecdoteCreateViewModel model, HttpContext context) =>
                 await mediator.Send(new AnecdoteCreateRequest(model, context.User), context.RequestAborted))
                 .Produces(200)
