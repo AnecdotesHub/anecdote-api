@@ -1,5 +1,6 @@
 ﻿using Jevstafjev.Anecdotes.AnecdoteApi.Domain;
 using Jevstafjev.Anecdotes.AnecdoteApi.Web.Application.Messaging.AnecdoteMessages.Queries;
+using Jevstafjev.Anecdotes.AnecdoteApi.Web.Application.Messaging.AnecdoteMessages.ViewModels;
 using Jevstafjev.Anecdotes.AnecdoteApi.Web.Definitions.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,11 @@ namespace Jevstafjev.Anecdotes.AnecdoteApi.Web.Endpoints
                 int pageIndex,
                 int pageSize = 10) =>
                 await mediator.Send(new AnecdoteGetPagedRequest(pageIndex, pageSize, context.User), context.RequestAborted))
+                .Produces(200)
+                .WithOpenApi();
+
+            group.MapPost("create", async ([FromServices] IMediator mediator, [FromBody] AnecdoteCreateViewModel model, HttpContext context) =>
+                await mediator.Send(new AnecdoteCreateRequest(model, context.User), context.RequestAborted))
                 .Produces(200)
                 .WithOpenApi();
         }
