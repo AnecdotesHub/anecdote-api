@@ -23,5 +23,15 @@ public class AnecdoteMapperConfiguration : Profile
             .ForMember(x => x.UpdatedAt, o => o.Ignore())
             .ForMember(x => x.UpdatedBy, o => o.Ignore())
             .ForMember(x => x.CreatedBy, o => o.MapFrom((_, _, _, context) => context.Items[ClaimTypes.Name]));
+
+        CreateMap<AnecdoteUpdateViewModel, Anecdote>()
+                .ForMember(x => x.Tags, o => o.Ignore())
+                .ForMember(x => x.CreatedAt, o => o.Ignore())
+                .ForMember(x => x.UpdatedAt, o => o.Ignore())
+                .ForMember(x => x.UpdatedBy, o => o.MapFrom((_, _, _, context) => context.Items[ClaimTypes.Name]))
+                .ForMember(x => x.CreatedBy, o => o.Ignore());
+
+        CreateMap<Anecdote, AnecdoteUpdateViewModel>()
+            .ForMember(x => x.Tags, o => o.MapFrom(a => string.Join(";", a.Tags!.Select(t => t.Name))));
     }
 }

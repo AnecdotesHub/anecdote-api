@@ -33,6 +33,16 @@ namespace Jevstafjev.Anecdotes.AnecdoteApi.Web.Endpoints
                 await mediator.Send(new AnecdoteCreateRequest(model, context.User), context.RequestAborted))
                 .Produces(200)
                 .WithOpenApi();
+
+            group.MapGet("get-for-update/{id:guid}", async ([FromServices] IMediator mediator, Guid id, HttpContext context) =>
+                await mediator.Send(new AnecdoteGetForUpdateRequest(id, context.User), context.RequestAborted))
+                .Produces(200)
+                .WithOpenApi();
+
+            group.MapPut("update", async ([FromServices] IMediator mediator, [FromBody] AnecdoteUpdateViewModel model, HttpContext context) =>
+                await mediator.Send(new AnecdoteUpdateRequest(model, context.User), context.RequestAborted))
+                .Produces(200)
+                .WithOpenApi();
         }
     }
 }
