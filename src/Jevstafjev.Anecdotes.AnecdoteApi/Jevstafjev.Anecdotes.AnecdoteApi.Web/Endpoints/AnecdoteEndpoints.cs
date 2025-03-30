@@ -33,7 +33,12 @@ namespace Jevstafjev.Anecdotes.AnecdoteApi.Web.Endpoints
                 await mediator.Send(new AnecdoteGetPagedRequest(pageIndex, pageSize, context.User), context.RequestAborted))
                 .Produces(200)
                 .WithOpenApi();
-            
+
+            group.MapGet("newest", async ([FromServices] IMediator mediator, HttpContext context, int total = 10) =>
+                await mediator.Send(new AnecdoteGetNewestRequest(total), context.RequestAborted))
+                .Produces(200)
+                .WithOpenApi();
+
             group.MapGet("find-by-tag/{tag}", async ([FromServices] IMediator mediator,
                 HttpContext context,
                 string tag,
