@@ -48,6 +48,11 @@ namespace Jevstafjev.Anecdotes.AnecdoteApi.Web.Endpoints
                 await mediator.Send(new AnecdoteUpdateRequest(model, context.User), context.RequestAborted))
                 .Produces(200)
                 .WithOpenApi();
+
+            group.MapDelete("delete/{id}", async ([FromServices] IMediator mediator, Guid id, HttpContext context) =>
+                await mediator.Send(new AnecdoteDeleteRequest(id, context.User), context.RequestAborted))
+                .Produces(200)
+                .WithOpenApi();
         }
     }
 }
