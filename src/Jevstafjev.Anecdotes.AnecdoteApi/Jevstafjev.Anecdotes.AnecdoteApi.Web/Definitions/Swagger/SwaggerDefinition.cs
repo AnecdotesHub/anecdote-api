@@ -74,7 +74,7 @@ public class SwaggerDefinition : AppDefinition
             options.OAuthClientId("swagger-client-id");
             options.OAuthClientSecret("secret");
             options.OAuthAppName("Anecdotes");
-            options.OAuth2RedirectUrl("https://localhost:7000/swagger/oauth2-redirect.html");
+            options.OAuth2RedirectUrl("https://localhost:7001/swagger/oauth2-redirect.html");
             options.EnablePersistAuthorization();
         });
     }
