@@ -16,6 +16,41 @@ public class SwaggerDefinition : AppDefinition
                 Title = "AnecdoteApi",
                 Version = "1.0.0"
             });
+
+            options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+            {
+                Type = SecuritySchemeType.OAuth2,
+                Flows = new OpenApiOAuthFlows
+                {
+                    AuthorizationCode = new OpenApiOAuthFlow
+                    {
+                        AuthorizationUrl = new Uri("https://localhost:10001/connect/authorize"),
+                        TokenUrl = new Uri("https://localhost:10001/connect/token"),
+                        Scopes = new Dictionary<string, string>
+                        {
+                            { "AnecdoteApi", "Default scope" }
+                        }
+                    }
+                }
+            });
+
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "oauth2"
+                        },
+                        In = ParameterLocation.Cookie,
+                        Type = SecuritySchemeType.OAuth2
+
+                    },
+                    new List<string>()
+                }
+            });
         });
     }
 
@@ -35,6 +70,13 @@ public class SwaggerDefinition : AppDefinition
             options.DefaultModelRendering(ModelRendering.Model);
             options.DefaultModelsExpandDepth(0);
             options.DocExpansion(DocExpansion.None);
+            options.OAuthScopeSeparator(" ");
+            options.OAuthClientId("swagger-client-id");
+            options.OAuthUsePkce();
+            options.OAuthAppName("Anecdotes");
+            options.OAuth2RedirectUrl("https://localhost:7000/swagger/oauth2-redirect.html");
+            options.EnablePersistAuthorization();
+            options.InjectStylesheet("/content/swagger-extras.css");
         });
     }
 }
