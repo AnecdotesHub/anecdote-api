@@ -35,12 +35,6 @@ public class AuthorizationDefinition : AppDefinition
                     };
                     options.Events = new JwtBearerEvents
                     {
-                        OnTokenValidated = context =>
-                        {
-                            var token = context.SecurityToken as JwtSecurityToken;
-                            Console.WriteLine("TOKEN AUDIENCE: " + string.Join(", ", token?.Audiences ?? new[] { "none" }));
-                            return Task.CompletedTask;
-                        },
                         OnChallenge = context =>
                         {
                             context.HandleResponse();
