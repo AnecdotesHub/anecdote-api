@@ -72,11 +72,10 @@ public class SwaggerDefinition : AppDefinition
             options.DocExpansion(DocExpansion.None);
             options.OAuthScopeSeparator(" ");
             options.OAuthClientId("swagger-client-id");
-            options.OAuthUsePkce();
+            options.OAuthClientSecret("secret");
             options.OAuthAppName("Anecdotes");
             options.OAuth2RedirectUrl("https://localhost:7000/swagger/oauth2-redirect.html");
             options.EnablePersistAuthorization();
-            options.InjectStylesheet("/content/swagger-extras.css");
         });
     }
 }
