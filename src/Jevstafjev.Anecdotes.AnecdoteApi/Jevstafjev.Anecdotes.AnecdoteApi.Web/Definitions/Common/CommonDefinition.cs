@@ -6,6 +6,7 @@ namespace Jevstafjev.Anecdotes.AnecdoteApi.Web.Definitions.Common
     {
         public override void ConfigureServices(WebApplicationBuilder builder)
         {
+            builder.Services.AddHttpClient();
             builder.Services.AddRazorPages();
         }
 
